@@ -20,6 +20,20 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [modal, setModal] = useState(null); // 'create' | contact object | null
+  const [modalError, setModalError] = useState('');
+
+  function extractErrorMessage(err) {
+    const data = err.response?.data;
+    if (data?.errors?.length) {
+      return data.errors.map((e) => e.message || e).join(' ');
+    }
+    return data?.message || 'Something went wrong. Please try again.';
+  }
+
+  function openModal(value) {
+    setModalError('');
+    setModal(value);
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,22 +65,37 @@ export default function Dashboard() {
   }, [fetchContacts]);
 
   async function handleCreate(values) {
-    await api.post('/api/contacts', values);
-    setModal(null);
-    setPage(1);
-    fetchContacts();
+    setModalError('');
+    try {
+      await api.post('/api/contacts', values);
+      setModal(null);
+      setPage(1);
+      fetchContacts();
+    } catch (err) {
+      setModalError(extractErrorMessage(err));
+    }
   }
 
   async function handleUpdate(id, values) {
-    await api.put(`/api/contacts/${id}`, values);
-    setModal(null);
-    fetchContacts();
+    setModalError('');
+    try {
+      await api.put(`/api/contacts/${id}`, values);
+      setModal(null);
+      fetchContacts();
+    } catch (err) {
+      setModalError(extractErrorMessage(err));
+    }
   }
 
   async function handleDelete(contact) {
     if (!window.confirm(`Delete ${contact.name}?`)) return;
-    await api.delete(`/api/contacts/${contact._id}`);
-    fetchContacts();
+    setError('');
+    try {
+      await api.delete(`/api/contacts/${contact._id}`);
+      fetchContacts();
+    } catch (err) {
+      setError(extractErrorMessage(err));
+    }
   }
 
   async function handleExport() {
@@ -93,7 +122,7 @@ export default function Dashboard() {
             Export CSV
           </button>
           <button
-            onClick={() => setModal('create')}
+            onClick={() => openModal('create')}
             className="rounded bg-slate-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700"
           >
             Add Contact
@@ -131,7 +160,7 @@ export default function Dashboard() {
         <ContactsTableSkeleton rows={LIMIT} />
       ) : (
         <>
-          <ContactTable contacts={contacts} onEdit={setModal} onDelete={handleDelete} />
+          <ContactTable contacts={contacts} onEdit={openModal} onDelete={handleDelete} />
           <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}
@@ -142,6 +171,11 @@ export default function Dashboard() {
             <h2 className="mb-4 text-lg font-semibold text-slate-800">
               {modal === 'create' ? 'Add Contact' : 'Edit Contact'}
             </h2>
+            {modalError && (
+              <p role="alert" className="mb-3 rounded bg-red-50 px-3 py-2 text-sm text-red-700">
+                {modalError}
+              </p>
+            )}
             <ContactForm
               initialValues={modal !== 'create' ? modal : undefined}
               submitLabel={modal === 'create' ? 'Add Contact' : 'Save Changes'}
