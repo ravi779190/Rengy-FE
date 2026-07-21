@@ -18,10 +18,12 @@ function renderProtected() {
 }
 
 describe('ProtectedRoute', () => {
-  test('shows a loading state while auth is initializing', () => {
+  test('shows a skeleton placeholder while auth is initializing', () => {
     vi.spyOn(AuthContext, 'useAuth').mockReturnValue({ user: null, initializing: true });
     renderProtected();
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    expect(screen.getByTestId('protected-route-skeleton')).toBeInTheDocument();
+    expect(screen.queryByText(/login page/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/dashboard page/i)).not.toBeInTheDocument();
   });
 
   test('redirects to /login when there is no authenticated user', () => {

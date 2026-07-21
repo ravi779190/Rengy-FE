@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 import Pagination from '../components/Pagination';
+import { ActivityLogSkeleton } from '../components/Skeleton';
 
 const LIMIT = 10;
 
@@ -39,7 +40,7 @@ export default function ActivityLog() {
       <h1 className="mb-4 text-xl font-semibold text-slate-800">Activity Log</h1>
 
       {loading ? (
-        <p className="py-10 text-center text-sm text-slate-500">Loading...</p>
+        <ActivityLogSkeleton rows={LIMIT} />
       ) : logs.length === 0 ? (
         <p className="py-10 text-center text-sm text-slate-500">No activity yet.</p>
       ) : (

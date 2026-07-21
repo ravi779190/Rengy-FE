@@ -3,6 +3,7 @@ import api from '../api/axios';
 import ContactTable from '../components/ContactTable';
 import ContactForm from '../components/ContactForm';
 import Pagination from '../components/Pagination';
+import { ContactsTableSkeleton } from '../components/Skeleton';
 
 const STATUS_OPTIONS = ['', 'Lead', 'Prospect', 'Customer'];
 const LIMIT = 10;
@@ -127,7 +128,7 @@ export default function Dashboard() {
       {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
 
       {loading ? (
-        <p className="py-10 text-center text-sm text-slate-500">Loading...</p>
+        <ContactsTableSkeleton rows={LIMIT} />
       ) : (
         <>
           <ContactTable contacts={contacts} onEdit={setModal} onDelete={handleDelete} />
