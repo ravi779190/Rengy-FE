@@ -5,7 +5,15 @@ export function Skeleton({ className = '' }) {
 export function ContactsTableSkeleton({ rows = 6 }) {
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <table className="min-w-full divide-y divide-slate-200 text-sm">
+      <table className="w-full table-fixed divide-y divide-slate-200 text-sm">
+        <colgroup>
+          <col className="w-[18%]" />
+          <col className="w-[26%]" />
+          <col className="w-[14%]" />
+          <col className="w-[16%]" />
+          <col className="w-[12%]" />
+          <col className="w-[14%]" />
+        </colgroup>
         <thead className="bg-slate-50">
           <tr>
             <th className="px-4 py-2 text-left font-medium text-slate-600">Name</th>
@@ -20,24 +28,24 @@ export function ContactsTableSkeleton({ rows = 6 }) {
           {Array.from({ length: rows }).map((_, i) => (
             <tr key={i}>
               <td className="px-4 py-3">
-                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 w-4/5" />
               </td>
               <td className="px-4 py-3">
-                <Skeleton className="h-4 w-40" />
+                <Skeleton className="h-4 w-4/5" />
               </td>
               <td className="px-4 py-3">
-                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-3/4" />
               </td>
               <td className="px-4 py-3">
-                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 w-3/4" />
               </td>
               <td className="px-4 py-3">
-                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-5 w-4/5 rounded-full" />
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-end gap-3">
-                  <Skeleton className="h-4 w-8" />
-                  <Skeleton className="h-4 w-10" />
+                  <Skeleton className="h-4 w-1/4" />
+                  <Skeleton className="h-4 w-1/3" />
                 </div>
               </td>
             </tr>

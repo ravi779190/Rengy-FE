@@ -11,7 +11,15 @@ export default function ContactTable({ contacts, onEdit, onDelete }) {
 
   return (
     <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-      <table className="min-w-full divide-y divide-slate-200 text-sm">
+      <table className="w-full table-fixed divide-y divide-slate-200 text-sm">
+        <colgroup>
+          <col className="w-[18%]" />
+          <col className="w-[26%]" />
+          <col className="w-[14%]" />
+          <col className="w-[16%]" />
+          <col className="w-[12%]" />
+          <col className="w-[14%]" />
+        </colgroup>
         <thead className="bg-slate-50">
           <tr>
             <th className="px-4 py-2 text-left font-medium text-slate-600">Name</th>
@@ -25,10 +33,10 @@ export default function ContactTable({ contacts, onEdit, onDelete }) {
         <tbody className="divide-y divide-slate-100">
           {contacts.map((contact) => (
             <tr key={contact._id}>
-              <td className="px-4 py-2">{contact.name}</td>
-              <td className="px-4 py-2">{contact.email}</td>
-              <td className="px-4 py-2">{contact.phone || '—'}</td>
-              <td className="px-4 py-2">{contact.company || '—'}</td>
+              <td className="truncate px-4 py-2">{contact.name}</td>
+              <td className="truncate px-4 py-2">{contact.email}</td>
+              <td className="truncate px-4 py-2">{contact.phone || '—'}</td>
+              <td className="truncate px-4 py-2">{contact.company || '—'}</td>
               <td className="px-4 py-2">
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_STYLES[contact.status] || ''}`}
