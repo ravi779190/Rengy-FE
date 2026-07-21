@@ -7,15 +7,26 @@ import Pagination from '../components/Pagination';
 const STATUS_OPTIONS = ['', 'Lead', 'Prospect', 'Customer'];
 const LIMIT = 10;
 
+const SEARCH_DEBOUNCE_MS = 400;
+
 export default function Dashboard() {
   const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [modal, setModal] = useState(null); // 'create' | contact object | null
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearch(searchInput);
+      setPage(1);
+    }, SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
   const fetchContacts = useCallback(async () => {
     setLoading(true);
@@ -93,11 +104,8 @@ export default function Dashboard() {
         <input
           type="search"
           placeholder="Search by name or email"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
-          }}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           className="flex-1 rounded border border-slate-300 px-3 py-2 text-sm"
         />
         <select
