@@ -4,7 +4,7 @@ React (Vite) + React Router + Tailwind CSS frontend for the mini-CRM assessment.
 
 ## Live app
 
-_fill in after deploying to Vercel_
+https://rengy-fe.vercel.app
 
 ## Tech stack
 
