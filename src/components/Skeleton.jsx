@@ -4,8 +4,8 @@ export function Skeleton({ className = '' }) {
 
 export function ContactsTableSkeleton({ rows = 6 }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <table className="w-full table-fixed divide-y divide-slate-200 text-sm">
+    <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+      <table className="w-full min-w-[720px] table-fixed divide-y divide-slate-200 text-sm">
         <colgroup>
           <col className="w-[18%]" />
           <col className="w-[26%]" />

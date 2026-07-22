@@ -11,7 +11,7 @@ export default function ContactTable({ contacts, onEdit, onDelete }) {
 
   return (
     <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-      <table className="w-full table-fixed divide-y divide-slate-200 text-sm">
+      <table className="w-full min-w-[720px] table-fixed divide-y divide-slate-200 text-sm">
         <colgroup>
           <col className="w-[18%]" />
           <col className="w-[26%]" />
